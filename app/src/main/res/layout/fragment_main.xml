@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".MainFragment"
+    android:orientation="vertical">
+    <!--android:background="COLOR"-->
 
-    <ImageView
-        android:id="@+id/MainFragment_ivSelectedImage"
+    <LinearLayout
+        android:layout_margin="30dp"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:layout_marginTop="64dp"
-        android:scaleType="fitXY"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/round_frame_bg"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/MainFragment_tvBlackBox"
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:layout_marginTop="64dp"
-        android:background="#FFFFFF" />
+        <ImageView
+            android:id="@+id/MainFragment_ivSelectedImage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="64dp"
+            android:scaleType="fitXY"/>
 
-    <TextView
-        android:id="@+id/MainFragment_tvNoSmokingString"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="358dp" />
-
-</FrameLayout>
+        <TextView
+            android:id="@+id/MainFragment_tvNoSmokingString"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp" />
+    </LinearLayout>
+</LinearLayout>

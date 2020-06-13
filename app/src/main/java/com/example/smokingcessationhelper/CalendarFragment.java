@@ -32,7 +32,9 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         mcvNoSmokingCalendar = view.findViewById(R.id.CalendarFragment_mcvNoSmokingCalendar);
+        /* TODO 추후 변경
         btNoSmokingStart = view.findViewById(R.id.CalendarFragment_btNoSmokingStart);
+         */
         mContext = getContext();
 
          /*
@@ -52,6 +54,7 @@ public class CalendarFragment extends Fragment {
         updateCalendarData();
         updateView();
 
+        /* TODO 추후변경
         btNoSmokingStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +62,7 @@ public class CalendarFragment extends Fragment {
                 btNoSmokingStart.setVisibility(View.INVISIBLE);
             }
         });
-
+        */
         return view;
     }
 
