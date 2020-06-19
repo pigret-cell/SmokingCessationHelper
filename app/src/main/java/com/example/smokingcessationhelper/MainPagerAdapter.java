@@ -18,7 +18,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         mData.add(new ContactFragment());
     }
 
-    public boolean isCalendarFragmentPosition(int position) { return mData.get(position) == calendarFragment;}
     @Override
     public Fragment getItem(int position) {
         return mData.get(position);
