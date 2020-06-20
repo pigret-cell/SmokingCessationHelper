@@ -8,16 +8,48 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity{
+    private FirebaseAuth mAuth;
+    private  BackPressCloseHandler backPressCloseHandler;
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
+
+    public void destroyFragment() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = findViewById(R.id.MainActivity_viewPager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.MainActivity_viewPager);
         final MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        backPressCloseHandler = new BackPressCloseHandler(this);
         viewPager.setAdapter(mainPagerAdapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+            @Override
+            public void onPageSelected(int position) {
+                if (mainPagerAdapter.isCalendarFragmentPosition(position));
+                CalendarFragment.updateView();
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) { }
+        });
+
+        BroadcastReceiver broadcastReceiver = new DateChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_DATE_CHANGED);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
+
 
 }
