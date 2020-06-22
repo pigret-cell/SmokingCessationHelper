@@ -25,7 +25,9 @@ public class CalendarFragment extends Fragment{
 
     private Context mContext = null;
     private Activity mActivity = null;
-
+    
+    private Button btNoSmokingStart = null;
+    
     private MaterialCalendarView mcvNoSmokingCalendar = null;
     private HashSet<CalendarDay> successedDays = new HashSet<>();
     private HashSet<CalendarDay> failedDays = new HashSet<>();
@@ -52,10 +54,11 @@ public class CalendarFragment extends Fragment{
 
         mcvNoSmokingCalendar = view.findViewById(R.id.CalendarFragment_mcvNoSmokingCalendar);
 
-        /* 추후 팝업 메뉴로 변경
+        //추후 팝업 메뉴로 변경
         btNoSmokingStart = view.findViewById(R.id.CalendarFragment_btNoSmokingStart);
         view.findViewById(R.id.CalendarFragment_btStartDate).setOnClickListener(onClickListener);
-        */
+        
+        mContext = getContext();
 
         /*
          * successedDates는 금연 성공 날짜, failedDates는 금연 실패 날짜이다.
@@ -146,11 +149,10 @@ public class CalendarFragment extends Fragment{
         mActivity = null;
     }
 
-    /* 추후 방식 변경
+    //추후 방식 변경
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             switch(v.getId()){
                 case R.id.CalendarFragment_btStartDate:
                     startCalenderFragmentActivity();
@@ -163,6 +165,5 @@ public class CalendarFragment extends Fragment{
         Intent intent = new Intent(getView().getContext(), CalendarFragment_Activity.class);
         startActivity(intent);
     }
-     */
 
 }
