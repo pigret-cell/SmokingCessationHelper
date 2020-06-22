@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     };
 
     private void loginUp() {
-        String id = ((EditText)findViewById(R.id.LoginActivity_etId)).getText().toString();
+        String id = ((EditText)findViewById(R.id.LoginActivity_etEmail)).getText().toString();
         String password = ((EditText)findViewById(R.id.LoginActivity_etPwd)).getText().toString();
 
         if(id.length() > 0 && password.length() > 0) {
