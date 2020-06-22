@@ -31,16 +31,16 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ImageView ivSelectedImage = (ImageView) view.findViewById(R.id.MainFragment_ivSelectedImage);
-        TextView tvNoSmokingStr = (TextView) view.findViewById(R.id.MainFragment_tvNoSmokingString);
+        ImageView ivSelectedImage = view.findViewById(R.id.MainFragment_ivSelectedImage);
+        TextView tvNoSmokingStr = view.findViewById(R.id.MainFragment_tvNoSmokingString);
         Random rand = new Random();
-        int alpha = 90; // 투명도
+        int alpha = 40; // 투명도
 
         //이미지 설정
         ivSelectedImage.setImageResource(R.drawable.no_smoking);
 
         //투명도 조절, 40% 불투명하게
-        ivSelectedImage.setColorFilter(getOpaqueColorFilter(40));
+        ivSelectedImage.setColorFilter(getOpaqueColorFilter(alpha));
 
         tvNoSmokingStr.setText(noSmokingStr[rand.nextInt(noSmokingStr.length)]);
 

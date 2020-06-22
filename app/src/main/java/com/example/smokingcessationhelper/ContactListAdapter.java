@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ContactListAdapter extends BaseAdapter {
-    private ArrayList<ContactListItem> contactListItems = new ArrayList<ContactListItem>();
+    private ArrayList<ContactListItem> contactListItems = new ArrayList<>();
 
     ContactListAdapter() {}
 
@@ -19,12 +19,12 @@ public class ContactListAdapter extends BaseAdapter {
         Context context = viewGroup.getContext();
 
         if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.contact_list_item, viewGroup, false);
         }
 
-        TextView tvName = (TextView) view.findViewById(R.id.tvName);
-        TextView tvPhoneNumber = (TextView) view.findViewById(R.id.tvPhoneNumber);
+        TextView tvName = view.findViewById(R.id.tvName);
+        TextView tvPhoneNumber = view.findViewById(R.id.tvPhoneNumber);
 
         ContactListItem contactListItem = contactListItems.get(position);
 

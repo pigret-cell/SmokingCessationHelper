@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> mData;
-    private CalendarFragment calendarFragment = new CalendarFragment();
+
     public MainPagerAdapter(FragmentManager fm) {
         super(fm);
 
         mData = new ArrayList<>();
         mData.add(new MainFragment());
-        mData.add(calendarFragment);
+        mData.add(new CalendarFragment());
         mData.add(new ContactFragment());
     }
 
