@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView imageView;
     private FirebaseStorage storage;
     private static final int PICK_IMAGE = 0;
-    private String path, pas;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE) {
            if (resultCode == RESULT_OK) {
                 try {
-                    System.out.println(data.getData());  //변환 전_test
-                    path = getPath(data.getData()); //변환 후
-                    System.out.println(path);
-
-                    Uri pass = data.getData();
-                    pas = pass.toString();
-
-
                     InputStream in = getContentResolver().openInputStream(data.getData());
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
@@ -108,17 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private String getPath(Uri uri) { //사진 파일경로 변환 코드.
-        String [] pro = {MediaStore.Images.Media.DATA};
-        CursorLoader cursorLoader = new CursorLoader(this, uri, pro,
-                null, null, null);
-        Cursor cursor = cursorLoader.loadInBackground();
-        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(index);
-    }
-
-
     private void signUp() {
         String email = ((EditText)findViewById(R.id.RegisterActivity_etEmail)).getText().toString();
         String password = ((EditText)findViewById(R.id.RegisterActivity_etPwd)).getText().toString();
@@ -130,18 +111,16 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    //FirebaseUser user = mAuth.getCurrentUser();
                                     startToast("회원가입에 성공했습니다.");
 
                                     String email = ((EditText)findViewById(R.id.RegisterActivity_etEmail)).getText().toString();
                                     String password = ((EditText)findViewById(R.id.RegisterActivity_etPwd)).getText().toString();
                                     String name = ((EditText)findViewById(R.id.RegisterActivity_etId)).getText().toString();
 
-//                                    String mUserEmail = mUser.getEmail();
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                                     UserInfo userInfo = new UserInfo(email, name, password);
-//                                    db.collection(mUserEmail).document("UserInfo").set(userInfo);
+                                    
                                     db.collection(email)
                                             .document("UserInfo")
                                             .set(userInfo)
@@ -169,8 +148,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onFailure(@NonNull Exception exception) {
                                                         startToast("에러");
-                                                        int errorCode = ((StorageException) exception).getErrorCode();
-                                                        String errorMessage = exception.getMessage();
+                                                        //int errorCode = ((StorageException) exception).getErrorCode();
+                                                        //String errorMessage = exception.getMessage();
                                                     }
                                                 })
                                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
