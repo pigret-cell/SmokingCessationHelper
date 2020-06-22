@@ -28,7 +28,7 @@
         app:srcCompat="@drawable/no_smoking" />
 
     <EditText
-        android:id="@+id/LoginActivity_etId"
+        android:id="@+id/LoginActivity_etEmail"
         android:layout_width="193dp"
         android:layout_height="38dp"
         android:layout_marginTop="16dp"
