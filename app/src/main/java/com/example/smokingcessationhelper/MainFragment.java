@@ -35,6 +35,21 @@ public class MainFragment extends Fragment {
         TextView tvNoSmokingStr = view.findViewById(R.id.MainFragment_tvNoSmokingString);
         Random rand = new Random();
         int alpha = 40; // 투명도
+        
+        Button btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.d("s", "onClick: ");
+                Toast.makeText(getActivity(), "로그아웃이 되었습니다.", Toast.LENGTH_SHORT).show();
+                SignOut();
+
+                getActivity().finish();
+
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //이미지 설정
         ivSelectedImage.setImageResource(R.drawable.no_smoking);
@@ -53,4 +68,7 @@ public class MainFragment extends Fragment {
         return new ColorMatrixColorFilter(cm);
     }
 
+    private void SignOut() {
+        FirebaseAuth.getInstance().signOut();
+    }
 }
