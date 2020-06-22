@@ -45,7 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView imageView;
     private FirebaseStorage storage;
     private static final int PICK_IMAGE = 0;
-    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,9 +137,9 @@ public class RegisterActivity extends AppCompatActivity {
                                             });
 
 
-                                    if(path != null) {
+                                    if(email != null) {
                                         StorageReference storageRef = storage.getReference();
-                                        Uri file = Uri.fromFile(new File(path));
+                                        Uri file = Uri.fromFile(new File(email));
                                         StorageReference profile = storageRef.child("images/" + email);
                                         UploadTask uploadTask = profile.putFile(file);
                                         uploadTask
