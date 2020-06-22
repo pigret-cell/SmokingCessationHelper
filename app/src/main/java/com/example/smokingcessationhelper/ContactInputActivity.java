@@ -15,9 +15,9 @@ public class ContactInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_input);
 
-        final EditText etName = (EditText) findViewById(R.id.ContactInputActivity_etInputName);
-        final EditText etPhoneNum = (EditText) findViewById(R.id.ContactInputActivity_etInputPhoneNum);
-        Button btSubmit = (Button) findViewById(R.id.ContactInputActivity_tvSubmit);
+        final EditText etName = findViewById(R.id.ContactInputActivity_etInputName);
+        final EditText etPhoneNum = findViewById(R.id.ContactInputActivity_etInputPhoneNum);
+        Button btSubmit = findViewById(R.id.ContactInputActivity_tvSubmit);
 
         btSubmit.setOnClickListener(new Button.OnClickListener() {
             @Override

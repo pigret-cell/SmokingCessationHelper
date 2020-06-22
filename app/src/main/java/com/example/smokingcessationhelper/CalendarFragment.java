@@ -3,14 +3,11 @@ package com.example.smokingcessationhelper;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +16,22 @@ import android.widget.Button;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashSet;
 
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment{
+
     private Context mContext = null;
     private Activity mActivity = null;
+
     private MaterialCalendarView mcvNoSmokingCalendar = null;
     private HashSet<CalendarDay> successedDays = new HashSet<>();
     private HashSet<CalendarDay> failedDays = new HashSet<>();
+
+    //private FirebaseAuth mAuth;
+
     private BroadcastReceiver dateChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -43,14 +47,15 @@ public class CalendarFragment extends Fragment {
     public CalendarFragment() { }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        mcvNoSmokingCalendar = view.findViewById(R.id.CalendarFragment_mcvNoSmokingCalendar);
-        /* TODO 추후 팝업 메뉴로 변경
-        btNoSmokingStart = view.findViewById(R.id.CalendarFragment_btNoSmokingStart);
-         */
 
+        mcvNoSmokingCalendar = view.findViewById(R.id.CalendarFragment_mcvNoSmokingCalendar);
+
+        /* 추후 팝업 메뉴로 변경
+        btNoSmokingStart = view.findViewById(R.id.CalendarFragment_btNoSmokingStart);
+        view.findViewById(R.id.CalendarFragment_btStartDate).setOnClickListener(onClickListener);
+        */
 
         /*
          * successedDates는 금연 성공 날짜, failedDates는 금연 실패 날짜이다.
@@ -67,6 +72,12 @@ public class CalendarFragment extends Fragment {
 
     private void updateDB(CalendarDay day, boolean successed) {
         /* DB에 데이터 등록 */
+
+        /*Calendar date = Calendar.getInstance();
+        date.add(Calendar.DATE,-1);
+        String beforeDate = new SimpleDateFormat("yyyy년 MM월 dd일").format(date.getTime()); //어제 날짜*/
+
+        // DB에 데이터 등록
         if (successed) {
             /* 어제 금연 성공, 데이터 DB에 데이터 추가 */
         }
@@ -87,15 +98,16 @@ public class CalendarFragment extends Fragment {
     }
 
     private void updateView() {
-        if (mcvNoSmokingCalendar == null)
+        if (mcvNoSmokingCalendar == null) {
             return;
+        }
 
         try {
             mcvNoSmokingCalendar.removeDecorators();
             mcvNoSmokingCalendar.invalidateDecorators();
             mcvNoSmokingCalendar.addDecorator(new SuccessedDaysDecorator(mContext, successedDays));
             mcvNoSmokingCalendar.addDecorator(new FailedDaysDecorator(mContext, failedDays));
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) { e.printStackTrace();}
     }
 
     @Override
@@ -118,7 +130,6 @@ public class CalendarFragment extends Fragment {
             CalendarDay yesterday = CalendarDay.from(today.getYear(), today.getMonth(), today.getDay() - 1);
             updateDB(yesterday, true);
         }
-
         updateCalendarData();
         updateView();
     }
@@ -135,5 +146,23 @@ public class CalendarFragment extends Fragment {
         mActivity = null;
     }
 
-}
+    /* 추후 방식 변경
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
+            switch(v.getId()){
+                case R.id.CalendarFragment_btStartDate:
+                    startCalenderFragmentActivity();
+                    break;
+            }
+        }
+    };
+
+    private void startCalenderFragmentActivity() {
+        Intent intent = new Intent(getView().getContext(), CalendarFragment_Activity.class);
+        startActivity(intent);
+    }
+     */
+
+}
