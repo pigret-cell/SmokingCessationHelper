@@ -47,8 +47,8 @@
         android:hint="@string/pwd"
         android:importantForAutofill="no"
         android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="@+id/LoginActivity_etId"
-        app:layout_constraintTop_toBottomOf="@+id/LoginActivity_etId" />
+        app:layout_constraintStart_toStartOf="@+id/LoginActivity_etEmail"
+        app:layout_constraintTop_toBottomOf="@+id/LoginActivity_etEmail" />
 
     <Button
         android:id="@+id/LoginActivity_btLogin"

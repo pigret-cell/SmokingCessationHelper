@@ -54,10 +54,11 @@ public class CalendarFragment extends Fragment{
 
         mcvNoSmokingCalendar = view.findViewById(R.id.CalendarFragment_mcvNoSmokingCalendar);
 
-        //추후 팝업 메뉴로 변경
+        /*추후 팝업 메뉴로 변경
         btNoSmokingStart = view.findViewById(R.id.CalendarFragment_btNoSmokingStart);
         view.findViewById(R.id.CalendarFragment_btStartDate).setOnClickListener(onClickListener);
-        
+        */
+
         mContext = getContext();
 
         /*
@@ -149,7 +150,7 @@ public class CalendarFragment extends Fragment{
         mActivity = null;
     }
 
-    //추후 방식 변경
+    /*추후 변경
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -160,6 +161,7 @@ public class CalendarFragment extends Fragment{
             }
         }
     };
+     */
 
     private void startCalenderFragmentActivity() {
         Intent intent = new Intent(getView().getContext(), CalendarFragment_Activity.class);

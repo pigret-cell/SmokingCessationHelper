@@ -1,5 +1,6 @@
 package com.example.smokingcessationhelper;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -11,8 +12,12 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Random;
 
@@ -35,7 +40,7 @@ public class MainFragment extends Fragment {
         TextView tvNoSmokingStr = view.findViewById(R.id.MainFragment_tvNoSmokingString);
         Random rand = new Random();
         int alpha = 40; // 투명도
-        
+
         Button btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,4 +19,7 @@
     <string name="select_image">소중한 애완동물 or 사람 사진 선택</string>
     <string name="no_smoking_start">금연 시작</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -15,7 +15,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         mData = new ArrayList<>();
         mData.add(new MainFragment());
         mData.add(new CalendarFragment());
-        mData.add(new ContactFragment());
+        mData.add(new FeaturesFragment());
     }
 
     @Override

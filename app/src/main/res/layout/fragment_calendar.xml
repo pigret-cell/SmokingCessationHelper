@@ -11,11 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:background="@drawable/round_frame_bg"
         android:orientation="vertical"
+        android:backgroundTint="#B2B2B2"
+        android:backgroundTintMode="add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/RoundFrame">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/CalendarFragment_mcvNoSmokingCalendar"
