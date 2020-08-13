@@ -3,34 +3,57 @@ package com.example.smokingcessationhelper;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.zip.Inflater;
 
 
 public class CalendarFragment extends Fragment{
-
     private Context mContext = null;
     private Activity mActivity = null;
-    
-    private Button btNoSmokingStart = null;
-    
+    private View mView = null;
+
     private MaterialCalendarView mcvNoSmokingCalendar = null;
     private HashSet<CalendarDay> successedDays = new HashSet<>();
     private HashSet<CalendarDay> failedDays = new HashSet<>();
+
+    private ConstraintLayout clPanel;
+
+    private FloatingActionButton fabExtend;
+
+    private int[] extendedMenus = { R.id.CalendarFragment_fabStart, R.id.CalendarFragment_tvStart, R.id.CalendarFragment_fabShare, R.id.CalendarFragment_tvShare };
+
+    private Animation fab_open, fab_close;
+    private Boolean isFabExtended = false;
 
     //private FirebaseAuth mAuth;
 
@@ -50,16 +73,40 @@ public class CalendarFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        mView = inflater.inflate(R.layout.fragment_calendar, container, false);
+        fabClickListener fabHandler = new fabClickListener();
 
-        mcvNoSmokingCalendar = view.findViewById(R.id.CalendarFragment_mcvNoSmokingCalendar);
-
-        /*추후 팝업 메뉴로 변경
-        btNoSmokingStart = view.findViewById(R.id.CalendarFragment_btNoSmokingStart);
-        view.findViewById(R.id.CalendarFragment_btStartDate).setOnClickListener(onClickListener);
-        */
+        mcvNoSmokingCalendar = mView.findViewById(R.id.CalendarFragment_mcvNoSmokingCalendar);
 
         mContext = getContext();
+
+        clPanel = mView.findViewById(R.id.CalendarFragment_clPanel);
+
+        fabExtend = mView.findViewById(R.id.CalendarFragment_fabExtend);
+
+        fab_open = AnimationUtils.loadAnimation(mContext, R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(mContext, R.anim.fab_close);
+
+        fabExtend.setOnClickListener(fabHandler);
+        for (int item: extendedMenus) {
+            (mView.findViewById(item)).setOnClickListener(fabHandler);
+        }
+
+        clPanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clPanel.setVisibility(View.INVISIBLE);
+                for (int item: extendedMenus) {
+                    (mView.findViewById(item)).startAnimation(fab_close);
+                    (mView.findViewById(item)).setClickable(false);
+                }
+                fabExtend.setImageDrawable(getResources().getDrawable(R.drawable.plus));
+                isFabExtended = false;
+            }
+        });
+
+
+ //       ibNoSmokingStart = view.findViewById(R.id.CalendarFragment_ibNoSmokingStart);
 
         /*
          * successedDates는 금연 성공 날짜, failedDates는 금연 실패 날짜이다.
@@ -71,7 +118,7 @@ public class CalendarFragment extends Fragment{
         updateCalendarData();
         updateView();
 
-        return view;
+        return mView;
     }
 
     private void updateDB(CalendarDay day, boolean successed) {
@@ -115,7 +162,7 @@ public class CalendarFragment extends Fragment{
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
         if (context instanceof MainActivity) {
@@ -150,18 +197,39 @@ public class CalendarFragment extends Fragment{
         mActivity = null;
     }
 
-    /*추후 변경
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+    class fabClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             switch(v.getId()){
-                case R.id.CalendarFragment_btStartDate:
+                case R.id.CalendarFragment_fabExtend:
+                    if (isFabExtended) {
+                        clPanel.setVisibility(View.INVISIBLE);
+                        for (int item: extendedMenus) {
+                            (mView.findViewById(item)).startAnimation(fab_close);
+                            (mView.findViewById(item)).setClickable(false);
+                        }
+                        fabExtend.setImageDrawable(getResources().getDrawable(R.drawable.plus));
+                    } else {
+                        clPanel.setVisibility(View.VISIBLE);
+                        for (int item: extendedMenus) {
+                            (mView.findViewById(item)).startAnimation(fab_open);
+                            (mView.findViewById(item)).setClickable(true);
+                        }
+                        fabExtend.setImageDrawable(getResources().getDrawable(R.drawable.close));
+                    }
+                    isFabExtended = !isFabExtended;
+                    break;
+
+                case R.id.CalendarFragment_fabStart:
                     startCalenderFragmentActivity();
+                    break;
+
+                case R.id.CalendarFragment_fabShare:
+                    // 추후 구현
                     break;
             }
         }
     };
-     */
 
     private void startCalenderFragmentActivity() {
         Intent intent = new Intent(getView().getContext(), CalendarFragment_Activity.class);
