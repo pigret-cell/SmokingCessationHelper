@@ -232,7 +232,7 @@ public class CalendarFragment extends Fragment{
     };
 
     private void startCalenderFragmentActivity() {
-        Intent intent = new Intent(getView().getContext(), CalendarFragment_Activity.class);
+        Intent intent = new Intent(mView.getContext(), CalendarFragment_Activity.class);
         startActivity(intent);
     }
 
